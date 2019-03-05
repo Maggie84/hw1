@@ -1,0 +1,53 @@
+灰度级
+I = imread('lena.bmp');
+subplot(2,4,1),imshow(I);
+I1 = floor(I/2);
+subplot(2,4,2),imshow(I1,[0,127]),title('灰度128');
+I2 = floor(I/4);
+subplot(2,4,3),imshow(I2,[0,63]),title('灰度64');
+I3 = floor(I/8);
+subplot(2,4,4),imshow(I3,[0,31]),title('灰度32');
+I4 = floor(I/16);
+subplot(2,4,5),imshow(I4,[0,15]),title('灰度16');
+I5 = floor(I/32);
+subplot(2,4,6),imshow(I5,[0,7]),title('灰度8');
+I6 = floor(I/64);
+subplot(2,4,7),imshow(I6,[0,3]),title('灰度4');
+I7 = floor(I/128);
+subplot(2,4,8),imshow(I7,[0,1]),title('灰度2');
+
+均值方差
+I = imread('lena.bmp');
+i=double(I);
+avg=mean2(i); 
+[m,n]=size(i);
+s=0;
+for x=1:m
+    for y=1:n
+    s=s+(i(x,y)-avg)^2;
+    end
+end
+a=s/(m*n-1);
+
+插值
+I = imread('lena.bmp');
+subplot(2,2,1),imshow(I);
+J1=imresize(I,4),title('原图');
+J2=imresize(I,4,'bilinear');
+J3=imresize(I,4,'bicubic');
+subplot(2,2,2),imshow(J1),title('最近邻');
+subplot(2,2,3),imshow(J2),title('双线性');
+subplot(2,2,4),imshow(J3),title('双三次');
+
+水平偏移
+I = imread('lena.bmp');
+xform=[1 0 0;1.5 1 0;0 0 1];
+tform_translate = maketform('affine', xform);%水平shear1.5
+i1= imtransform(I, tform_translate);
+subplot(2,2,1),imshow(i1),title('水平1.5');
+J1=imresize(i1,[2048 2048]);
+J2=imresize(i1,[2048 2048],'bilinear');
+J3=imresize(i1,[2048 2048],'bicubic');
+subplot(2,2,2),imshow(J1),title('最近邻');
+subplot(2,2,3),imshow(J2),title('双线性');
+subplot(2,2,4),imshow(J3),title('双三次');
